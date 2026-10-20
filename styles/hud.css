@@ -1,0 +1,267 @@
+/* ==========================================================================
+   Space Voyage - Cockpit Telemetry HUD & Warp Speed Jump Overlay
+   ========================================================================== */
+
+/* Fullscreen Warp Jump Visual Overlay */
+.warp-jump-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-warp-overlay);
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.95) 0%, rgba(0, 240, 255, 0.8) 25%, rgba(168, 85, 247, 0.6) 60%, rgba(3, 7, 18, 0.98) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease-out;
+}
+
+.warp-jump-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.warp-tunnel-effect {
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(from 0deg at 50% 50%, #00f0ff 0deg, #a855f7 72deg, #38bdf8 144deg, #c084fc 216deg, #00f0ff 288deg, #a855f7 360deg);
+  opacity: 0.35;
+  filter: blur(40px);
+  animation: warpSpin 1.8s linear infinite;
+}
+
+@keyframes warpSpin {
+  100% { transform: rotate(360deg); }
+}
+
+.warp-center-hud {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  background: rgba(3, 7, 18, 0.85);
+  backdrop-filter: var(--glass-blur-heavy);
+  padding: 2.5rem 3.5rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-cyan-glow);
+  box-shadow: 0 0 50px rgba(0, 240, 255, 0.6), inset 0 0 25px rgba(0, 240, 255, 0.3);
+}
+
+.warp-warning-title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: 0.15em;
+  color: var(--color-cyan-glow);
+  text-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
+  margin-bottom: 0.75rem;
+}
+
+.warp-velocity-counter {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+}
+
+/* Cockpit Telemetry Section */
+.telemetry-section {
+  position: relative;
+  background: rgba(8, 14, 28, 0.6);
+  border-top: 1px solid var(--glass-border-subtle);
+  border-bottom: 1px solid var(--glass-border-subtle);
+}
+
+.hud-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.hud-panel {
+  padding: 1.75rem;
+  background: rgba(14, 23, 42, 0.75);
+  border: 1px solid var(--glass-border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.hud-panel:hover {
+  border-color: var(--glass-border-hover);
+  box-shadow: var(--shadow-cosmic-card-hover);
+}
+
+.hud-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.hud-label {
+  font-family: var(--font-tech);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-cyan-glow);
+}
+
+.hud-indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-cyan-glow);
+  box-shadow: 0 0 8px var(--color-cyan-glow);
+}
+
+/* Antimatter Core Visualizer */
+.reactor-core-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.pulsing-reactor {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #00f0ff 0%, #3b82f6 50%, rgba(3, 7, 18, 0) 70%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: reactorPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes reactorPulse {
+  0% { transform: scale(0.9); box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
+  100% { transform: scale(1.1); box-shadow: 0 0 35px rgba(0, 240, 255, 0.8), 0 0 50px rgba(168, 85, 247, 0.4); }
+}
+
+.reactor-ring {
+  position: absolute;
+  width: 105px;
+  height: 105px;
+  border: 1px dashed rgba(0, 240, 255, 0.6);
+  border-radius: 50%;
+  animation: rotateClockwise 8s linear infinite;
+}
+
+.reactor-output-val {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-top: 1rem;
+}
+
+.reactor-unit {
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+}
+
+/* Shield Progress Gauge */
+.gauge-svg-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 120px;
+}
+
+.circular-gauge {
+  width: 110px;
+  height: 110px;
+  transform: rotate(-90deg);
+}
+
+.gauge-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 8;
+}
+
+.gauge-fill {
+  fill: none;
+  stroke: var(--color-cyan-glow);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 28; /* ~90% */
+  transition: stroke-dashoffset 0.8s ease;
+  filter: drop-shadow(0 0 6px var(--color-cyan-glow));
+}
+
+.gauge-center-text {
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+/* Velocity Readout */
+.velocity-readout-wrap {
+  text-align: center;
+  padding: 1.25rem 0;
+}
+
+.velocity-big-num {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--color-text-primary);
+  background: linear-gradient(135deg, #ffffff 40%, var(--color-cyan-glow) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.velocity-unit {
+  font-family: var(--font-tech);
+  font-size: 0.8rem;
+  color: var(--color-cyan-glow);
+  letter-spacing: 0.1em;
+}
+
+/* Telemetry Mini Bars */
+.telemetry-bars-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.mini-bar-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.mini-bar-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.mini-bar-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.mini-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, #00f0ff, #a855f7);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+}
