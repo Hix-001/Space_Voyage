@@ -1,0 +1,248 @@
+/* ==========================================================================
+   Space Voyage - Base Styles, Typography & Reset
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-space-void);
+  background-image: 
+    radial-gradient(circle at 15% 25%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(0, 240, 255, 0.07) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(14, 23, 42, 0.5) 0%, var(--color-space-void) 100%);
+  background-attachment: fixed;
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Cosmic Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-space-void);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.3);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-space-void);
+  transition: var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-cyan-glow);
+  box-shadow: var(--glow-cyan-sm);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  color: var(--color-text-primary);
+}
+
+h1 {
+  font-size: clamp(2.5rem, 5.5vw, 4.8rem);
+  font-weight: 900;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+}
+
+h3 {
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+}
+
+p {
+  color: var(--color-text-secondary);
+  font-size: 1.05rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+/* Layout Utilities */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1.2rem, 3.5vw, 2.5rem);
+  padding-right: clamp(1.2rem, 3.5vw, 2.5rem);
+}
+
+.section {
+  padding: clamp(4.5rem, 9vw, 8rem) 0;
+  position: relative;
+  z-index: var(--z-base);
+}
+
+.section-header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-tech);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-cyan-glow);
+  margin-bottom: 0.85rem;
+  padding: 0.35rem 0.9rem;
+  background: var(--color-cyan-tint);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+}
+
+.section-title {
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  font-size: 1.15rem;
+  color: var(--color-text-secondary);
+}
+
+/* Glassmorphism Surface Base */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-cosmic-card);
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.glass-panel:hover {
+  border-color: var(--glass-border-hover);
+  box-shadow: var(--shadow-cosmic-card-hover);
+}
+
+/* Buttons */
+.cosmic-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.9rem 1.85rem;
+  border-radius: var(--radius-pill);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.cosmic-btn-primary {
+  background: linear-gradient(135deg, #00f0ff 0%, #0284c7 100%);
+  color: #030712;
+  box-shadow: var(--glow-cyan-sm);
+  font-weight: 700;
+}
+
+.cosmic-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glow-cyan-md);
+  filter: brightness(1.1);
+}
+
+.cosmic-btn-secondary {
+  background: rgba(14, 23, 42, 0.7);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  color: var(--color-text-primary);
+}
+
+.cosmic-btn-secondary:hover {
+  border-color: var(--color-cyan-glow);
+  box-shadow: var(--glow-cyan-sm);
+  background: rgba(0, 240, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.cosmic-btn-warp {
+  background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+  color: #ffffff;
+  box-shadow: var(--glow-purple-sm);
+}
+
+.cosmic-btn-warp:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--glow-purple-md);
+}
+
+/* Glow Text */
+.glow-cyan {
+  color: var(--color-cyan-glow);
+  text-shadow: 0 0 16px rgba(0, 240, 255, 0.6);
+}
+
+.glow-purple {
+  color: var(--color-warp-purple);
+  text-shadow: 0 0 16px rgba(168, 85, 247, 0.6);
+}
+
+.gradient-text-stellar {
+  background: linear-gradient(135deg, #ffffff 20%, #00f0ff 70%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Accessibility & Utilities */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
