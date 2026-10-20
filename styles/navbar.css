@@ -1,0 +1,247 @@
+/* ==========================================================================
+   Space Voyage - Floating Glassmorphic Navbar & HUD Bar
+   ========================================================================== */
+
+.cosmic-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-nav);
+  padding: 1.1rem 0;
+  transition: background-color var(--transition-normal), backdrop-filter var(--transition-normal), padding var(--transition-normal);
+}
+
+.cosmic-nav.scrolled {
+  padding: 0.75rem 0;
+  background: rgba(3, 7, 18, 0.85);
+  backdrop-filter: var(--glass-blur-heavy);
+  -webkit-backdrop-filter: var(--glass-blur-heavy);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+/* Brand Logo */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.brand-icon {
+  width: 38px;
+  height: 38px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-icon-planet {
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 35% 35%, #00f0ff 0%, #0369a1 100%);
+  border-radius: 50%;
+  box-shadow: var(--glow-cyan-sm);
+}
+
+.brand-icon-orbit {
+  position: absolute;
+  width: 36px;
+  height: 18px;
+  border: 1.5px solid rgba(0, 240, 255, 0.65);
+  border-radius: 50%;
+  transform: rotate(-30deg);
+  animation: orbitSpin 12s linear infinite;
+}
+
+@keyframes orbitSpin {
+  0% { transform: rotate(-30deg); }
+  100% { transform: rotate(330deg); }
+}
+
+.brand-text {
+  background: linear-gradient(135deg, #ffffff 30%, #00f0ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-sub {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--color-cyan-glow);
+  font-family: var(--font-tech);
+  margin-left: 2px;
+}
+
+/* Navigation Links */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 2rem;
+}
+
+.nav-link {
+  font-family: var(--font-tech);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary);
+  position: relative;
+  padding: 0.4rem 0;
+  transition: color var(--transition-fast);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-cyan-glow), var(--color-warp-purple));
+  transition: width var(--transition-normal);
+  border-radius: var(--radius-pill);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--color-cyan-glow);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Nav Actions & Telemetry Controls */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+/* Audio Synthesizer Button */
+.audio-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.95rem;
+  background: rgba(14, 23, 42, 0.6);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-secondary);
+  font-family: var(--font-tech);
+  font-size: 0.8rem;
+  transition: all var(--transition-fast);
+}
+
+.audio-toggle-btn:hover {
+  border-color: var(--color-cyan-glow);
+  color: var(--color-cyan-glow);
+}
+
+.audio-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.audio-bar {
+  width: 2.5px;
+  background: var(--color-text-tertiary);
+  border-radius: 1px;
+  height: 3px;
+  transition: height 0.2s ease, background 0.2s ease;
+}
+
+.audio-toggle-btn.playing .audio-bar {
+  background: var(--color-cyan-glow);
+  animation: audioWave 1s ease-in-out infinite alternate;
+}
+
+.audio-toggle-btn.playing .audio-bar:nth-child(1) { height: 7px; animation-delay: 0.1s; }
+.audio-toggle-btn.playing .audio-bar:nth-child(2) { height: 12px; animation-delay: 0.3s; }
+.audio-toggle-btn.playing .audio-bar:nth-child(3) { height: 5px; animation-delay: 0.2s; }
+.audio-toggle-btn.playing .audio-bar:nth-child(4) { height: 9px; animation-delay: 0.4s; }
+
+@keyframes audioWave {
+  0% { transform: scaleY(0.4); }
+  100% { transform: scaleY(1.2); }
+}
+
+/* Warp Speed Quick Button */
+.nav-warp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.55rem 1.1rem;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(99, 102, 241, 0.2) 100%);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  color: #d8b4fe;
+  border-radius: var(--radius-pill);
+  transition: all var(--transition-fast);
+}
+
+.nav-warp-btn:hover {
+  background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+  color: #ffffff;
+  border-color: #c084fc;
+  box-shadow: var(--glow-purple-sm);
+  transform: translateY(-1px);
+}
+
+.warp-pulse-dot {
+  width: 6px;
+  height: 6px;
+  background: #a855f7;
+  border-radius: 50%;
+  animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.4); box-shadow: 0 0 8px #a855f7; }
+}
+
+/* Mobile Hamburger Toggle */
+.mobile-nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.mobile-nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--color-cyan-glow);
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
